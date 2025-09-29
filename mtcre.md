@@ -100,6 +100,43 @@ In routing >
 
 
 
+# Area ranges \
+
+In the area range we can see this example
+
+![alt text](pppoe-server.png)
+
+This example we have the area  PPPoE server with the ip range  `10.10.11.0/24`  your gateway is the MK6 where i am sharing the ip range address on ospf `Area-1`. But wiht it we hava a problem, because if i see on my MK-1 we has the /32 routes about we pppoe server. 
+
+![alt text](problem-pppoe-server.png)
+
+We create 9 routes on ospf routing table of clientes, it is only  five clientes, imagin an ISP with two thousen clients. 
+
+### Resolving the problem
+
+For this we can crete the area range on MK4 our `ASBR` <>Area-0 < > Area-1`<>  filtering the range IP for sharing on OSPF routing table. 
+
+
+### How it Was on MK-1  
+
+![alt text](pppoe-problem-resolved.png)
+
+We did the routes be only a route, Saving the route on routing table.
+
+TESTESTES
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
