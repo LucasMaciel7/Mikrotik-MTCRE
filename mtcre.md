@@ -50,15 +50,15 @@ Example, you have two areas such as:
 Inside the NSSA area, you can be learning the ospf routes equal to totally stub or stuby, blocking LSAs type 3 and type 5. But the difference is you can insert route static from NSSA area to Area backbone. This area normally don't more used, but is good you learning it. 
 
 
-# OSPF Brodcast
-In brodcast network its necessary was a DR and BDR
+# OSPF broadcast
+In broadcast network its necessary was a DR and BDR
 
 ## DR (Designeted Router) 
 ### `224.0.0.5` All routes 
-    When the DR or BDR to need comunicate with all router, he used the brodcast band `224.0.0.5` for you to comunicate 
+    When the DR or BDR to need comunicate with all router, he used the broadcast band `224.0.0.5` for you to comunicate 
 
 ### `224.0.0.6` just DR and BDR
-    When an router in brodcast network need to comunicate with DR ou BDR, he used the brodcast band `224.0.0.6` for to comunitcate with DR or BDR
+    When an router in broadcast network need to comunicate with DR ou BDR, he used the broadcast band `224.0.0.6` for to comunitcate with DR or BDR
 
 
 
