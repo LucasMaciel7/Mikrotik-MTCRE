@@ -403,6 +403,76 @@ Flags: X - disabled; R - running
 [admin@R2] 
 ```
 
+If you want use the IPSec with L2TP
+
+
+### Server
+
+```less
+[admin@R1] > interface/l2tp-server/server/set ipsec-secret=12345 use-ipsec=requir
+ed
+```
+> - `ipsec-secret`: Strong password 
+> - `use-ipsec`: Required (so connect only if use ipsec)
+
+### Client
+
+```less
+[admin@R2] > interface/l2tp-client/set ipsec-secret=12345 use-ipsec=no numbers=0 
+[admin@R2] > interface/l2tp-client/print 
+Flags: X - disabled; R - running 
+ 0  R name="l2tp-mk2" max-mtu=1450 max-mru=1450 mrru=disabled connect-to=192.168.88.147 
+      user="l2tp-mk2" password="12345" profile=default-encryption keepalive-timeout=60 
+      use-peer-dns=no use-ipsec=no ipsec-secret="12345" allow-fast-path=no 
+      add-default-route=no dial-on-demand=no allow=pap,chap,mschap1,mschap2 
+      random-source-port=no l2tp-proto-version=l2tpv2 l2tpv3-digest-hash=md5 
+[admin@R2] >
+```
+### PPPoE
+The PPPoE is a layer two protocol, is an extension of PPP protocol opera on the same layer brodcast.
+
+ ![alt-text](pppoe-conncet.jpg)
+
+
+It ocupe 8 bytes on layer two. 
+
+### Create
+
+Create the ip pool
+
+```less
+[admin@R1] > ip pool/add name=pppoe-pool ranges=10.0.0.20-10.0.0.30
+```
+
+Create the profile
+
+```less
+[admin@R1] > ppp/profile/add name=profile-pppoe local-address=10.0.0.19 remote-address=pppoe-pool
+```
+
+Enable server
+
+```less
+[admin@R1] > interface/pppoe-server/server/add interface=ether1 max-mtu=1480 max-mru=1480 service-name=pppoe-server default-profile=profile-pppoe disabled=no
+```
+
+Create the client password
+
+```less
+[admin@R1] > ppp/secret/add name=pppoe-mk2 password=12345 service=pppoe profile=profile-pppoe
+```
+
+
+### Create the PPPoE Client
+
+```less
+[admin@R2] > interface/pppoe-client/add user=pppoe-mk2 password=12345 disabled=n
+```
+
+
+
+
+
 
 
 
