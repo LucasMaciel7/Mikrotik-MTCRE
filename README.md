@@ -176,7 +176,7 @@ We did the routes be only a route, Saving the route on routing table.
 ## EOIP
 This protocol is a protocol Layer Two owener  Mikrotik Router OS Owner, based on RFC 1701. This protocol we can intercconect two points how an cable LAN interconnect two lan networks and we can add this protocol a bridge network.
 
-![alt text](Eoip-example.png)
+![alt text](Eoip-example.jpg)
 
 
 The eoip  protocol usualy uses the IpIp protocol or pptp for connect with other router, how shuch as in image above. 
@@ -205,7 +205,7 @@ For create in the terminal:
 
 The packet on wireshark with no ipsec
 
-![alt text](image.png)
+![alt text](eoip-wireshark.png)
 
 
 We can see all packets data, so uses the Eoip with no ipsec is a insecure protocol.
@@ -220,7 +220,7 @@ Uses the Ip-Sec all  packets will be encrypt.
 
 PPTP is not a secure protocol, don't acept any security config  for encrypt the Data. Is a layer 3 protocol and is the Protocol client-to-side and side-to-side. 
 
-![alt text](pptp-setup.png)
+![alt text](pptp-setup.jpg)
 
 ## PPTP Server:
 
@@ -338,7 +338,7 @@ Flags: X - disabled; R - running; H - hw-crypto
 
 L2TP works on port UDP/1701 this protocol for mantain secure we used the IpSec protocol for encrypt all datas.
 
-![alt text](Simple-l2tp-setup.png)
+![alt text](Simple-l2tp-setup.jpg)
 
 ## For make the Server
 ```less

@@ -123,7 +123,7 @@ For this we can crete the area range on MK4 our `ASBR` <>Area-0 < > Area-1`<>  f
 
 We did the routes be only a route, Saving the route on routing table.
 
-TESTESTES
+TESTESTE
 
 
 
