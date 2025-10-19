@@ -168,3 +168,255 @@ For this we can crete the area range on MK4 our `ASBR` <>Area-0 < > Area-1`<> fi
 ![alt text](pppoe-problem-resolved.png)
 
 We did the routes be only a route, Saving the route on routing table.
+
+
+
+# Tuneis VPN
+
+## EOIP
+This protocol is a protocol Layer Two owener  Mikrotik Router OS Owner, based on RFC 1701. This protocol we can intercconect two points how an cable LAN interconnect two lan networks and we can add this protocol a bridge network.
+
+![alt text](Eoip-example.png)
+
+
+The eoip  protocol usualy uses the IpIp protocol or pptp for connect with other router, how shuch as in image above. 
+
+### in our Lab
+
+![alt text](lab-eoip.png)
+
+We can close VPN beteween MK1 and MK2 using the eoip protocol.
+
+Config in MK1 <> MK2
+![alt text](eoip-config.png)
+
+`Name`: eoip-tunel
+`MTU`: 1500 
+`Remote Addr`: 192.168.88.146 (The MK2)
+`Tunel-ID`: 10 (Type on area id on OSPF)  
+`IP-Secret`: For encrypt the connetion 
+
+For create in the terminal: 
+
+```less
+/interface eoip add name="eoip-main" tunnel-id=0 remote-address=10.0.0.1 disabled=no
+
+```
+
+The packet on wireshark with no ipsec
+
+![alt text](image.png)
+
+
+We can see all packets data, so uses the Eoip with no ipsec is a insecure protocol.
+
+![alt text](eoip-ipsec.png)
+
+Uses the Ip-Sec all  packets will be encrypt. 
+
+
+
+### PPTP
+
+PPTP is not a secure protocol, don't acept any security config  for encrypt the Data. Is a layer 3 protocol and is the Protocol client-to-side and side-to-side. 
+
+![alt text](pptp-setup.png)
+
+## PPTP Server:
+
+Enable service
+```less
+interface/pptp-server/server/set enabled=yes
+```
+
+Create the secret
+
+```less
+ppp/secret/add local-address=10.0.0.1 name=user1 password=12345 profi
+le=default-encryption remote-address=10.0.0.5 service=pptp
+```
+
+- `Local-addresses`: Local Adresses VPN Server
+- `Remote-adresses`: Cliente local adresses on VPN
+
+
+
+## PPTP Client
+
+Create  the client
+
+```less
+ interface pptp-client add connect-to=192.168.88.2 disabled=no name=pptp-out1 password=12345 user=user1
+
+```
+
+```less
+[admin@R2] > interface/pptp-client/print 
+Flags: X - disabled; R - running 
+ 0  R ;;; PPTP connections are considered unsafe, it is suggested to use a more >
+ern VPN protocol instead
+      name="ppp-client-MK1" max-mtu=1450 max-mru=1450 mrru=disabled 
+      connect-to=192.168.88.147 user="user1" password="12345" 
+      profile=default-encryption keepalive-timeout=60 use-peer-dns=no 
+      add-default-route=no dial-on-demand=no allow=pap,chap,mschap1,mschap
+```
+
+
+
+### SSTP
+Layer 3 protocol this tunnel is close on port 443 so this protocol has an Grear mobility becase imagine if you need access an VPN in the airport, usualy the firewalls block the most port VPN in your lan network, but the port 444 the  firewall can't block the port https 443. 
+
+![alt text](Sstp-how-works.png)
+
+
+#### Create
+```
+interface/sstp-server/server/set enabled=yes default-profile=default-
+encryption  
+```
+
+Show
+
+```less
+[admin@R1] > interface/sstp-server/server/print 
+                    enabled: yes               
+                       port: 443               
+                    max-mtu: 1500              
+                    max-mru: 1500              
+                       mrru: disabled          
+          keepalive-timeout: 60                
+            default-profile: default-encryption
+             authentication: pap               
+                             chap              
+                             mschap1           
+                             mschap2           
+                certificate: none              
+  verify-client-certificate: no                
+                        pfs: no                
+                tls-version: any               
+                    ciphers: aes256-sha        
+                             aes256-gcm-sha384 
+[admin@R1] > 
+
+```
+
+Client secret
+
+```less
+[admin@R1] > ppp/secret/add local-address=10.0.0.2 remote-address=10.0.0.6 name=ss
+tp-mk2 password=12345 profile=default-encryption
+```
+
+### Client server
+
+Create
+
+```less
+[admin@MikroTik > interface sstp-client add connect-to=192.168.88.147 disabled=no name=sstp-out1 password=123456 profile=default-encryption user=sstp-mk2
+
+```
+
+Show
+
+```less
+[admin@R2] > interface/sstp-client/print 
+Flags: X - disabled; R - running; H - hw-crypto 
+ 0  R  name="sstp-out1" max-mtu=1500 max-mru=1500 mrru=disabled 
+       connect-to=192.168.88.147 port=443 http-proxy=:: proxy-port=443 
+       certificate=none verify-server-certificate=no 
+       verify-server-address-from-certificate=yes user="sstp-mk2" 
+       password="12345" profile=default-encryption keepalive-timeout=60 
+       add-default-route=no dial-on-demand=no 
+       authentication=pap,chap,mschap1,mschap2 pfs=no tls-version=any 
+       ciphers=aes256-sha add-sni=no 
+[admin@R2] > 
+
+```
+
+
+# L2TP
+
+L2TP works on port UDP/1701 this protocol for mantain secure we used the IpSec protocol for encrypt all datas.
+
+![alt text](Simple-l2tp-setup.png)
+
+## For make the Server
+```less
+[admin@R1] > interface/l2tp-server/server/set enabled=yes
+
+```
+
+Show 
+
+```less
+[admin@R1] > interface/l2tp-server/server/print 
+                 enabled: yes               
+                 max-mtu: 1450              
+                 max-mru: 1450              
+                    mrru: disabled          
+          authentication: pap               
+                          chap              
+                          mschap1           
+                          mschap2           
+       keepalive-timeout: 30                
+            max-sessions: unlimited         
+         default-profile: default-encryption
+               use-ipsec: no                
+            ipsec-secret:                   
+          caller-id-type: ip-address        
+    one-session-per-host: no                
+         allow-fast-path: no                
+       l2tpv3-circuit-id:                   
+    l2tpv3-cookie-length: 0                 
+      l2tpv3-digest-hash: md5               
+  accept-pseudowire-type: all               
+    accept-proto-version: all               
+[admin@R1] > 
+```
+
+Create the user
+
+```less
+ppp/secret/add name=l2tp-mk2 password=12345 profile=default-encryptio
+n service=l2tp local-address=10.0.0.3 remote-address=10.0.0.10 disabled=no en
+```
+
+## L2TP Client
+
+Create
+
+```less
+[admin@R2] > interface/l2tp-client/add connect-to=192.168.88.147 name=l2tp-mk2 password=1234
+5 profile=default-encryption disabled=no
+```
+
+Show
+
+```less
+[admin@R2] > interface/l2tp-client/print 
+Flags: X - disabled; R - running 
+ 0  R name="l2tp-mk2" max-mtu=1450 max-mru=1450 mrru=disabled connect-to=192.168.88.147 
+      user="l2tp-mk2" password="12345" profile=default-encryption keepalive-timeout=60 
+      use-peer-dns=no use-ipsec=no ipsec-secret="" allow-fast-path=no 
+      add-default-route=no dial-on-demand=no allow=pap,chap,mschap1,mschap2 
+      random-source-port=no l2tp-proto-version=l2tpv2 l2tpv3-digest-hash=md5 
+[admin@R2] 
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
