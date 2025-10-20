@@ -1,3 +1,35 @@
+
+# Mikrotik MTCRE – Routing, OSPF, VPNs, and VLANs
+
+Comprehensive study and lab guide focused on the **MikroTik Certified Routing Engineer (MTCRE)** certification.  
+This repository covers essential routing concepts and **hands-on configurations** for OSPF, VPN tunnels (EoIP, PPTP, SSTP, L2TP, PPPoE), **VLAN**, and **QinQ**, including terminal commands, lab examples, and topology diagrams.
+
+---
+
+## Summary
+
+- [Introduction](#introduction)
+  - [OSPF](#ospf)
+    - [How OSPF Works](#how-does-ospf-works-)
+    - [Cost Calculation](#how-the-ospf-calculate-the-cost-)
+    - [OSPF Areas](#ospf-areas)
+    - [Broadcast Networks (DR/BDR and Multicast)](#ospf-broadcast)
+    - [Point-to-Point Networks](#ospf-point-to-point)
+    - [Router Types (ASBR, BR, ABR)](#type-routers)
+    - [Area Ranges / Summarization](#area-ranges)
+  - [VPN Tunnels](#tuneis-vpn)
+    - [EoIP (with and without IPsec)](#eoip)
+    - [PPTP (Legacy and Insecure)](#pptp)
+    - [SSTP (Port 443 and Firewall Mobility)](#sstp)
+    - [L2TP (+IPsec Recommended)](#l2tp)
+    - [PPPoE (Layer 2, Overhead, Server/Client)](#pppoe)
+  - [VLAN and QinQ](#vlan)
+    - [VLAN (Layer 2 Segmentation)](#vlan)
+    - [QinQ (Stacked VLANs)](#qinq)
+---
+
+
+
 # OSPF
 
 ![alt text](images/ospf-img.png)
