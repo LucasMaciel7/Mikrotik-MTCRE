@@ -199,7 +199,7 @@ Config in MK1 <> MK2
 For create in the terminal: 
 
 ```less
-/interface eoip add name="eoip-main" tunnel-id=0 remote-address=10.0.0.1 disabled=no
+/interface eoip add name="eoip-main" tunnel-id=10 remote-address=10.0.0.1 disabled=no
 
 ```
 
@@ -468,6 +468,73 @@ Create the client password
 ```less
 [admin@R2] > interface/pppoe-client/add user=pppoe-mk2 password=12345 disabled=n
 ```
+
+
+
+# Vlan  
+
+![alt text](vlan-example.png)
+
+Vlan is a virtual interface operate in the layer two, we can to separate the trafic on interface using the vlan. Example in an interface i have: 
+
+- DHCP Server - 192.168.10.1/24 on ether1
+- DHCP Server - 192.168.20.2/24 on ether1 -> vlan10 
+
+> We can to separete the layer brodcasts on an interface.
+    > The vlan create an virtual interface on Physical interface
+
+
+
+## Create
+
+```less
+[admin@R1] > interface/vlan/add interface=ether1 name=vlan10 vlan-id=10 disabled=no
+```
+Show
+
+```less
+admin@R1] > interface/print 
+Flags: D - DYNAMIC; X - DISABLED; R - RUNNING
+Columns: NAME, TYPE, ACTUAL-MTU, L2MTU, MAC-ADDRESS
+#     NAME               TYPE      ACTUAL-MTU  L2MTU  MAC-ADDRESS      
+0   R ether1             ether           1500         50:39:D9:00:34:00
+1   R ether2             ether           1500         50:39:D9:00:34:01
+2     ether3             ether           1500         50:39:D9:00:34:02
+3     ether4             ether           1500         50:39:D9:00:34:03
+9   R vlan10             vlan            1500         50:39:D9:00:34:00
+[admin@R1] >
+```
+## QinQ
+
+We can create QuinQ vlan in vlan example:
+
+- Vlan 10 : Autentication City
+    - Vlan 20: Autentication Neighborhood A
+    - Vlan 30: Autentication Neighborhood B
+
+
+> The QuinQ stack one vlan on top another on laywer Two
+    > Any Vlan has 8 bytes on layer two head
+
+### Create QuinQ
+
+Following the  example above, we have the vlan10 and will create the vlan 20 inside the vlan 10.
+
+```less
+[admin@R1] > interface/vlan/add name=vlan20 interface=vlan10 vlan-id=20
+```
+Show
+
+```less
+[admin@R1] > interface/vlan/print 
+Flags: R - RUNNING
+Columns: NAME, MTU, ARP, VLAN-ID, INTERFACE
+#   NAME     MTU  ARP      VLAN-ID  INTERFACE
+0 R vlan10  1500  enabled       10  ether1   
+1 R vlan20  1500  enabled       20  vlan10   
+[admin@R1] >
+```
+
 
 
 
