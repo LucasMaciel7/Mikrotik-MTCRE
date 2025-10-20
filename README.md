@@ -431,7 +431,7 @@ Flags: X - disabled; R - running
 ### PPPoE
 The PPPoE is a layer two protocol, is an extension of PPP protocol opera on the same layer brodcast.
 
- ![alt-text](pppoe-conncet.jpg)
+ ![alt-text](/images/pppoe-conncet.jpg)
 
 
 It ocupe 8 bytes on layer two. 
