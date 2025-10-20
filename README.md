@@ -1,6 +1,6 @@
 # OSPF
 
-![alt text](ospf-img.png)
+![alt text](images/ospf-img.png)
 
 ---
 
@@ -42,7 +42,7 @@ OSPF Calculate the **best path** by adding up the cost of each hop.
 
 ## OSPF Areas
 
-![alt text](ospf-areas.png)
+![alt text](/images/ospf-areas.png)
 
 ### Backbone Area
 
@@ -126,7 +126,7 @@ So because it we dont have form adjacency with every routers just with the route
 
 # Type Routers
 
-![alt text](type-routers.png)
+![alt text](/images/type-routers.png)
 
 ## ASBR (Autonomous System Boundary Router)
 
@@ -146,12 +146,12 @@ Connect with outher border.
 
 In the area range we can see this example:
 
-![alt text](pppoe-server.png)
+![alt text](/images/pppoe-server.png)
 
 This example we have the area PPPoE server with the ip range `10.10.11.0/24` your gateway is the MK6 where i am sharing the ip range address on ospf `Area-1`.  
 But wiht it we have a problem, because if i see on my MK-1 we has the /32 routes about our pppoe server. 
 
-![alt text](problem-pppoe-server.png)
+![alt text](/images/problem-pppoe-server.png)
 
 We create 9 routes on ospf routing table of clientes, it is only five clientes, imagin an ISP with two thousen clients.  
 
@@ -165,7 +165,7 @@ For this we can crete the area range on MK4 our `ASBR` <>Area-0 < > Area-1`<> fi
 
 ### How it Was on MK-1  
 
-![alt text](pppoe-problem-resolved.png)
+![alt text](/images/pppoe-problem-resolved.png)
 
 We did the routes be only a route, Saving the route on routing table.
 
@@ -176,19 +176,19 @@ We did the routes be only a route, Saving the route on routing table.
 ## EOIP
 This protocol is a protocol Layer Two owener  Mikrotik Router OS Owner, based on RFC 1701. This protocol we can intercconect two points how an cable LAN interconnect two lan networks and we can add this protocol a bridge network.
 
-![alt text](Eoip-example.jpg)
+![alt text](/images/Eoip-example.jpg)
 
 
 The eoip  protocol usualy uses the IpIp protocol or pptp for connect with other router, how shuch as in image above. 
 
 ### in our Lab
 
-![alt text](lab-eoip.png)
+![alt text](/images/lab-eoip.png)
 
 We can close VPN beteween MK1 and MK2 using the eoip protocol.
 
 Config in MK1 <> MK2
-![alt text](eoip-config.png)
+![alt text](/images/eoip-config.png)
 
 `Name`: eoip-tunel
 `MTU`: 1500 
@@ -205,12 +205,12 @@ For create in the terminal:
 
 The packet on wireshark with no ipsec
 
-![alt text](eoip-wireshark.png)
+![alt text](/images/eoip-wireshark.png)
 
 
 We can see all packets data, so uses the Eoip with no ipsec is a insecure protocol.
 
-![alt text](eoip-ipsec.png)
+![alt text](/images/eoip-ipsec.png)
 
 Uses the Ip-Sec all  packets will be encrypt. 
 
@@ -220,7 +220,7 @@ Uses the Ip-Sec all  packets will be encrypt.
 
 PPTP is not a secure protocol, don't acept any security config  for encrypt the Data. Is a layer 3 protocol and is the Protocol client-to-side and side-to-side. 
 
-![alt text](pptp-setup.jpg)
+![alt text](/images/pptp-setup.jpg)
 
 ## PPTP Server:
 
@@ -266,7 +266,7 @@ ern VPN protocol instead
 ### SSTP
 Layer 3 protocol this tunnel is close on port 443 so this protocol has an Grear mobility becase imagine if you need access an VPN in the airport, usualy the firewalls block the most port VPN in your lan network, but the port 444 the  firewall can't block the port https 443. 
 
-![alt text](Sstp-how-works.png)
+![alt text](/images/Sstp-how-works.png)
 
 
 #### Create
@@ -338,7 +338,7 @@ Flags: X - disabled; R - running; H - hw-crypto
 
 L2TP works on port UDP/1701 this protocol for mantain secure we used the IpSec protocol for encrypt all datas.
 
-![alt text](Simple-l2tp-setup.jpg)
+![alt text](/images/Simple-l2tp-setup.jpg)
 
 ## For make the Server
 ```less
@@ -473,7 +473,7 @@ Create the client password
 
 # Vlan  
 
-![alt text](vlan-example.png)
+![alt text](/images/vlan-example.png)
 
 Vlan is a virtual interface operate in the layer two, we can to separate the trafic on interface using the vlan. Example in an interface i have: 
 
